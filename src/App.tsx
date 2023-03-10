@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { useToast } from '@chakra-ui/react'
 import './App.css';
+
+const N = 10;
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        Hello, World!
         <LikeButton />
       </header>
     </div>
@@ -13,9 +15,19 @@ function App() {
 }
 
 function LikeButton() {
-  const [count, setCount] = useState(999);
+  const toast = useToast()
+  const [count, setCount] = useState(0);
   const handleClick = () => {
-    setCount(count + 1);
+    if (count < N) {
+      setCount(count + 1);
+    }
+    else {
+      toast({
+        title: `${N} を超えた値になりません`,
+        status: 'error',
+        isClosable: true,
+      })
+    }
   };
   return (
     <span className="likeButton" onClick={handleClick}>
